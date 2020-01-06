@@ -3,7 +3,7 @@ from itertools import product
 class Groupoid:
 
     def __init__(self, elements, comm=True, zero=0):
-        self.elements = tuple(elements + (zero,))
+        self.elements = tuple(elements) + (zero,)
         self.comm = comm
 
         if self.comm:
@@ -23,6 +23,11 @@ class Groupoid:
         else:
             self.mult_table[(a, b)] = prod
 
+    def copy(self):
+        g = Groupoid((), self.comm)
+        g.elements = self.elements
+        g.mult_table = self.mult_table.copy()
+        return g
 
 
 def is_assoc(groupoid):

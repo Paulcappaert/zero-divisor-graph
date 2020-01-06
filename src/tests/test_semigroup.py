@@ -1,5 +1,6 @@
 import unittest
-from src.semigroup import reduce_poss_maps
+from src.semigroup import reduce_poss_maps, get_semigroups
+from src.groupoid import Groupoid as groid
 
 class TestReduceMaps(unittest.TestCase):
 
@@ -33,3 +34,33 @@ class TestReduceMaps(unittest.TestCase):
         self.assertEqual(self.p_maps[frozenset({1})], {1, 2})
         self.assertEqual(self.p_maps[frozenset({2})], {2})
         self.assertEqual(self.p_maps[frozenset({1, 2})], {2})
+
+class TestGetSemigroups(unittest.TestCase):
+
+    def test_three(self):
+        g = groid({1, 2, 3}, comm=True, zero=1)
+        mappings = {
+            frozenset({2, 3}): {2, 3},
+            frozenset({2}): {2, 3},
+            frozenset({3}): {2, 3}
+        }
+        semigroups = get_semigroups(mappings, g)
+        self.assertIsNotNone(semigroups)
+        for s in semigroups:
+            self.assertIn(s.get(2, 3), {2, 3})
+
+    def test_four(self):
+        g = groid({0, 1, 2, 3}, comm=True, zero=0)
+        g.set(1, 2, 0)
+        g.set(2, 3, 0)
+        mappings = {
+            frozenset({1, 3}): {1, 2, 3},
+            frozenset({1}): {1, 2, 3, 0},
+            frozenset({2}): {1, 2, 3, 0},
+            frozenset({3}): {1, 2, 3, 0},
+        }
+
+        semigroups = get_semigroups(mappings, g)
+        self.assertIsNotNone(semigroups)
+        for s in semigroups:
+            self.assertIn(s.get(1, 3), {1, 2, 3})
