@@ -1,4 +1,5 @@
 import itertools
+from src.groupoid import Groupoid
 
 '''
 gets a simple graph with the given edges
@@ -36,11 +37,25 @@ def poss_mappings(graph, zero=0):
             nhood = graph[a].union(graph[b])
             not_empty, maps[frozenset({a, b})] = _poss_vertex(nhood, graph)
             poss = not_empty and poss
+        else:
+            maps[frozenset({a, b})] = {zero}
 
     for a in graph.keys():
         nhood = graph[a]
         not_empty, maps[frozenset({a})] = _poss_vertex(nhood, graph)
         maps[frozenset({a})].add(zero)
         poss = not_empty and poss
+        maps[frozenset({a, zero})] = {zero}
+
+    maps[frozenset({zero})] = {zero}
 
     return poss, maps
+
+def get_groupoid(graph, zero=0):
+    g = Groupoid(graph.keys(), zero=zero)
+
+    for a in graph.keys():
+        for b in graph[a]:
+            g.set(a, b, zero)
+
+    return g
