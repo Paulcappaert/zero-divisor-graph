@@ -1,5 +1,5 @@
 import itertools
-from src.groupoid import Groupoid
+from zdg.groupoid import Groupoid
 
 '''
 gets a simple graph with the given edges

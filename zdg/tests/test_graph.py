@@ -1,5 +1,5 @@
 import unittest
-from src.graph import graph_from_edges, poss_mappings
+from zdg.graph import graph_from_edges, poss_mappings
 
 class TestGraphFromEdges(unittest.TestCase):
 

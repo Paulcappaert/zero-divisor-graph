@@ -1,5 +1,5 @@
 import unittest
-from src.groupoid import Groupoid, is_assoc
+from zdg.groupoid import Groupoid, is_assoc
 
 class TestGroupoid(unittest.TestCase):
 

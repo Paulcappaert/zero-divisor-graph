@@ -1,5 +1,5 @@
-from src.graph import graph_from_edges, poss_mappings, get_groupoid
-from src.semigroup import reduce_poss_maps, get_semigroups
+from zdg.graph import graph_from_edges, poss_mappings, get_groupoid
+from zdg.semigroup import reduce_poss_maps, get_semigroups
 
 class ZeroDivisorGraph():
 

@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     # automatically discover all tests in the current dir of the form test*.py
     # NOTE: only works for python 2.7 and later
-    test_suite = test_loader.discover('./src/tests')
+    test_suite = test_loader.discover('./zdg/tests')
 
     # run the test suite
     test_runner.run(test_suite)

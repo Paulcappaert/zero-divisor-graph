@@ -1,6 +1,6 @@
 import unittest
-from src.semigroup import reduce_poss_maps, get_semigroups
-from src.groupoid import Groupoid as groid
+from zdg.semigroup import reduce_poss_maps, get_semigroups
+from zdg.groupoid import Groupoid as groid
 
 class TestReduceMaps(unittest.TestCase):
 

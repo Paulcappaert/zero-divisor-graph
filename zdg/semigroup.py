@@ -1,5 +1,5 @@
-from src.counter import ModularCounter
-from src.groupoid import is_assoc
+from zdg.counter import ModularCounter
+from zdg.groupoid import is_assoc
 
 def _inverse_set(a, b, pm, elements):
     '''
@@ -75,7 +75,6 @@ def get_semigroups(poss_maps, groupoid):
             else:
                 a, = key
                 groupoid.set(a, a, c)
-
         if is_assoc(groupoid):
             semigroups.add(groupoid.copy())
 
