@@ -25,3 +25,11 @@ You can create a zero divisor graph from edges as such. the vertices can be name
 >>> example1 = ZDG((1, 2), (2, 3))
 >>> example2 = ZDG(('a', 'b'), ('b', 'c'))
 ```
+
+You can print all of the semigroups from a zero divisor graph as such
+
+```
+>>> semigroups = example1.semigroups()
+>>> for s in semigroups:
+...   print(s.caley_table())
+```
