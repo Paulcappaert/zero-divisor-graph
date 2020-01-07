@@ -29,6 +29,21 @@ class Groupoid:
         g.mult_table = self.mult_table.copy()
         return g
 
+    def caley_table(self):
+        ordered_elements = list(self.elements)
+        ordered_elements.sort()
+        ret_val = '*|\t'
+        for a in ordered_elements:
+            ret_val += f'{a}|\t'
+        ret_val += '\n'
+        for a in ordered_elements:
+            ret_val += str(a) + '|\t'
+            for b in ordered_elements:
+                product = self.get(a, b)
+                ret_val += f'{product},\t'
+            ret_val += '\n'
+        return ret_val
+
 
 def is_assoc(groupoid):
     for a in groupoid.elements:
