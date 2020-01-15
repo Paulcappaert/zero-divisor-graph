@@ -1,5 +1,6 @@
 from zdg.graph import graph_from_edges, poss_mappings, get_groupoid
-from zdg.semigroup import reduce_poss_maps, get_semigroups
+from zdg.semigroup import reduce_poss_maps, get_semigroups, convert_pm
+from zdg.groupoid import Groupoid
 
 class ZeroDivisorGraph():
 
@@ -12,14 +13,16 @@ class ZeroDivisorGraph():
 
     def poss_maps(self, zero=0):
         sufficient, poss_maps = poss_mappings(self.graph, zero=zero)
-        reduce_poss_maps(poss_maps, tuple(self.graph.keys()) + (zero,))
+        poss_maps = convert_pm(poss_maps, groupoid.elements)
+        reduce_poss_maps(poss_maps, len(self.graph) + 1)
         return poss_maps
 
     def semigroups(self, zero=0):
         sufficient, poss_maps = poss_mappings(self.graph, zero=zero)
-        groupoid = get_groupoid(self.graph, zero=zero)
+        groupoid = Groupoid(self.graph.keys(), zero=zero)
+        poss_maps = convert_pm(poss_maps, groupoid.elements)
         if sufficient:
-            reduce_poss_maps(poss_maps, tuple(self.graph.keys()) + (zero,))
+            reduce_poss_maps(poss_maps, groupoid.size)
             return get_semigroups(poss_maps, groupoid)
         else:
             return set()

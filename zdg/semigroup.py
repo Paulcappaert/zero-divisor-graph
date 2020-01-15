@@ -1,26 +1,46 @@
 from zdg.counter import ModularCounter
 from zdg.groupoid import is_assoc
 
-def _inverse_set(a, b, pm, elements):
+def _inverse_set(a, b, pm, size):
     '''
     returns: set of values z such that az = b is a possible mapping
     '''
     inv = set()
-    for z in elements:
+    for z in range(size):
         if b in pm[frozenset({a, z})]:
             inv.add(z)
     return inv
 
-def reduce_poss_maps(poss_maps, elements):
+def convert_pm(pm, elements):
+    pmi = {}
+
+    for prod, maps in pm.items():
+
+        if len(prod) == 2:
+            a, b = prod
+            a = elements.index(a)
+            b = elements.index(b)
+        else:
+            a, = prod
+            a = elements.index(a)
+            b = a
+
+        pmi[frozenset({a, b})] = set()
+        for m in maps:
+            pmi[frozenset({a, b})].add(elements.index(m))
+
+    return pmi
+
+def reduce_poss_maps(poss_maps, size):
     '''
     parameter: dict of possible mappings for a groupoid
     returns: dict of possible associative mappings
              None if there is no associative mappings
     '''
     for _ in range(len(poss_maps)):
-        for a in elements:
-            for b in elements:
-                for c in elements:
+        for a in range(size):
+            for b in range(size):
+                for c in range(size):
                     ab = poss_maps[frozenset({a, b})]
                     bc = poss_maps[frozenset({b, c})]
                     prod1 = set()
@@ -33,11 +53,11 @@ def reduce_poss_maps(poss_maps, elements):
 
                     ab_vals = set()
                     for p in products:
-                        ab_vals.update(_inverse_set(c, p, poss_maps, elements))
+                        ab_vals.update(_inverse_set(c, p, poss_maps, size))
 
                     bc_vals = set()
                     for p in products:
-                        bc_vals.update(_inverse_set(a, p, poss_maps, elements))
+                        bc_vals.update(_inverse_set(a, p, poss_maps, size))
 
                     poss_maps[frozenset({a, b})].intersection_update(ab_vals)
                     poss_maps[frozenset({b, c})].intersection_update(bc_vals)

@@ -33,3 +33,9 @@ You can print all of the semigroups from a zero divisor graph as such
 >>> for s in semigroups:
 ...   print(s.caley_table())
 ```
+
+# Benchmarks
+
+in version 1.0.0
+5 vertex graph took 0.07028315800000001 seconds
+14 vertex graph took 5.7108899619999995 seconds
